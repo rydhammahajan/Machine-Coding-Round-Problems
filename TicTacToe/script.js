@@ -60,6 +60,7 @@ for(let i=0 ; i<3 ; i++) {
                 if(moves === 9) {
                     game = 0 ; 
                     const ele = document.createElement("h1") ; 
+                    ele.classList.add("message")
                     ele.innerText = `Its a draw !` ; 
                     container.insertAdjacentElement("afterend" , ele) ; 
                     return ;
@@ -146,5 +147,5 @@ document.querySelector("button").addEventListener("click" , ()=>{
             boxes[i][j].innerText = "" ; 
         }
     }
-    container.nextElementSibling.remove(); 
+    document.querySelector(".message").remove(); 
 })

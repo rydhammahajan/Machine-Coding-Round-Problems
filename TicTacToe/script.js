@@ -146,4 +146,5 @@ document.querySelector("button").addEventListener("click" , ()=>{
             boxes[i][j].innerText = "" ; 
         }
     }
+    container.nextElementSibling.remove(); 
 })

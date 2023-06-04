@@ -3,6 +3,8 @@ const cardContainer = document.querySelector("#card-container") ;
 const API_URL = "https://fakestoreapi.com/products" ;
 
 let cardsData = [] ; 
+let displayData = []  ;
+let page = 0 ; 
 
 
 async function fetchAPI () {
@@ -11,15 +13,17 @@ async function fetchAPI () {
     const data_json = await data.json() ; 
     console.log(data_json) ;
     cardsData = data_json ;
+    displayData = cardsData.slice(page*10 , 10*(page+1)) ; 
     InsertCards() ;   
 }
 
 function InsertCards(){
 
-    if(cardsData.length > 0) {
+    cardContainer.innerHTML = "" ;
+    if(displayData.length > 0) {
 
         
-        cardsData.map((card)=>{
+        displayData.map((card)=>{
             const rating = Math.floor(card.rating.rate) ; 
             const ele = document.createElement("div") ;
             ele.classList.add("single-card") ; 
@@ -70,5 +74,31 @@ function StarRatings() {
 
 }
 
+const buttons = Array.from(document.getElementsByClassName("pointers")) ;
+
+buttons.forEach((btn)=>{
+    
+    btn.addEventListener("click" , (e)=>{
+
+        if(e.target.dataset.value === "prev") {
+            page-- ; 
+            if(page === 0) {
+                e.target.setAttribute("disabled" , true) ; 
+            }
+            e.target.nextElementSibling.removeAttribute("disabled"); 
+        }
+        else if(e.target.dataset.value === "next" ) {
+            page++ ;
+            if(page === 1) {
+                e.target.setAttribute("disabled" , true) ; 
+            } 
+            e.target.previousElementSibling.removeAttribute("disabled");
+        }
+
+        console.log(page) ;
+        fetchAPI() ;
+
+    })
+})
 
 fetchAPI() ;
